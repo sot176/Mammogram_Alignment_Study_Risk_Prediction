@@ -160,9 +160,9 @@ def train_val_jointly(
             pri = pred["pred_pri"]
 
             # Risk Loss
-            risk_loss_fused = get_risk_loss_BCE(args, fused, target, y_mask)
-            risk_loss_cur = get_risk_loss_BCE(args, cur, target, y_mask)
-            risk_loss_pri = get_risk_loss_BCE(args, pri, target_prior, y_mask_prior)
+            risk_loss_fused = get_risk_loss_BCE(fused, target, y_mask)
+            risk_loss_cur = get_risk_loss_BCE(cur, target, y_mask)
+            risk_loss_pri = get_risk_loss_BCE(pri, target_prior, y_mask_prior)
 
             risk_loss = risk_loss_fused + risk_loss_cur + risk_loss_pri
             running["risk_loss"] += risk_loss.item()
@@ -262,9 +262,9 @@ def train_val_jointly(
 
                 # Risk Loss
                 risk_pred_val = outputs_val["risk_prediction"]
-                risk_loss_fused = get_risk_loss_BCE(args, risk_pred_val["pred_fused"], target_val, y_mask_val)
-                risk_loss_cur = get_risk_loss_BCE(args, risk_pred_val["pred_cur"], target_val, y_mask_val)
-                risk_loss_pri = get_risk_loss_BCE(args, risk_pred_val["pred_pri"], target_prior_val, y_mask_val_prior)
+                risk_loss_fused = get_risk_loss_BCE(risk_pred_val["pred_fused"], target_val, y_mask_val)
+                risk_loss_cur = get_risk_loss_BCE(risk_pred_val["pred_cur"], target_val, y_mask_val)
+                risk_loss_pri = get_risk_loss_BCE(risk_pred_val["pred_pri"], target_prior_val, y_mask_val_prior)
                 risk_loss = risk_loss_fused + risk_loss_cur + risk_loss_pri
                 running["risk_loss"] += risk_loss.item()
 
@@ -501,9 +501,9 @@ def train_val_jointly_img_alignment(
             pri = risk_pred["pred_pri"]
 
             # Compute risk losses
-            risk_loss_fused = get_risk_loss_BCE(args, fused, target, y_mask)
-            risk_loss_cur = get_risk_loss_BCE(args, cur, target, y_mask)
-            risk_loss_pri = get_risk_loss_BCE(args, pri, target_prior, y_mask_prior)
+            risk_loss_fused = get_risk_loss_BCE(fused, target, y_mask)
+            risk_loss_cur = get_risk_loss_BCE(cur, target, y_mask)
+            risk_loss_pri = get_risk_loss_BCE(pri, target_prior, y_mask_prior)
 
             risk_loss = risk_loss_fused + risk_loss_cur + risk_loss_pri
             running["risk_loss"] += risk_loss.item()
@@ -588,9 +588,9 @@ def train_val_jointly_img_alignment(
                 risk_pred_pri = risk_prediction_val["pred_pri"]
                 del risk_prediction_val
 
-                risk_loss_fused = get_risk_loss_BCE(args, risk_pred_fused, target_val, y_mask_val)
-                risk_loss_cur = get_risk_loss_BCE(args, risk_pred_cur, target_val, y_mask_val)
-                risk_loss_pri = get_risk_loss_BCE(args, risk_pred_pri, target_prior_val, y_mask_val_prior)
+                risk_loss_fused = get_risk_loss_BCE(risk_pred_fused, target_val, y_mask_val)
+                risk_loss_cur = get_risk_loss_BCE(risk_pred_cur, target_val, y_mask_val)
+                risk_loss_pri = get_risk_loss_BCE(risk_pred_pri, target_prior_val, y_mask_val_prior)
                 risk_loss_val = risk_loss_fused + risk_loss_cur + risk_loss_pri
 
                 del risk_loss_fused, risk_loss_cur, risk_loss_pri
