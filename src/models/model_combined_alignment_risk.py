@@ -14,8 +14,7 @@ class CombinedAlignmentRiskModel_Mirai(nn.Module):
     """
     def __init__(self, in_channels=512):
         super().__init__()
-        sys.path.append(
-            '/pfs/lustrep4/scratch/project_465001915/thrunsol/Risk_prediction_lumi/src/AsymMirai_master/onconet')
+        sys.path.append('path/to/onconet')  # Adjust or remove based on your package structure
         self.encoder = extract_mirai_backbone(
             '/scratch/project_465001915/thrunsol/mirai_pretrained_backbone/mgh_mammo_MIRAI_Base_May20_2019.p'
         )
@@ -71,8 +70,8 @@ class RiskModel_no_alignment_Mirai(nn.Module):
     """
     def __init__(self):
         super().__init__()
-        sys.path.append(
-            '/pfs/lustrep4/scratch/project_465001915/thrunsol/Risk_prediction_lumi/src/AsymMirai_master/onconet')
+        sys.path.append('path/to/onconet')  # Adjust or remove based on your package structure
+
         self.encoder = extract_mirai_backbone(
             '/scratch/project_465001915/thrunsol/mirai_pretrained_backbone/mgh_mammo_MIRAI_Base_May20_2019.p'
         )
@@ -104,8 +103,8 @@ class RiskModel_implicit_alignment_Mirai(nn.Module):
     """
     def __init__(self):
         super().__init__()
-        sys.path.append(
-            '/pfs/lustrep4/scratch/project_465001915/thrunsol/Risk_prediction_lumi/src/AsymMirai_master/onconet')
+        sys.path.append('path/to/onconet')  # Adjust or remove based on your package structure
+
         self.encoder = extract_mirai_backbone(
             '/scratch/project_465001915/thrunsol/mirai_pretrained_backbone/mgh_mammo_MIRAI_Base_May20_2019.p'
         )
@@ -137,8 +136,8 @@ class CombinedImgAlignmentRiskModel_Mirai(nn.Module):
     """
     def __init__(self,):
         super().__init__()
-        sys.path.append(
-            '/pfs/lustrep4/scratch/project_465001915/thrunsol/Risk_prediction_lumi/src/AsymMirai_master/onconet')
+        sys.path.append('path/to/onconet')  # Adjust or remove based on your package structure
+
         self.encoder = extract_mirai_backbone(
             '/scratch/project_465001915/thrunsol/mirai_pretrained_backbone/mgh_mammo_MIRAI_Base_May20_2019.p'
         )
@@ -182,6 +181,7 @@ class CombinedImgAlignmentRiskModel_downsample_img_deformation_field_Mirai(nn.Mo
     """
     def __init__(self):
         super().__init__()
+        sys.path.append('path/to/onconet')  # Adjust or remove based on your package structure
         self.encoder = extract_mirai_backbone(
             '/scratch/project_465001915/thrunsol/mirai_pretrained_backbone/mgh_mammo_MIRAI_Base_May20_2019.p'
         )
