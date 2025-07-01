@@ -1,5 +1,4 @@
 import os
-import time
 import numpy as np
 import torch
 import torch.nn as nn
@@ -8,7 +7,6 @@ from tqdm import tqdm
 import torch.distributed as dist
 from torch.utils.data import DataLoader, DistributedSampler
 from torch.nn.parallel import DistributedDataParallel as DDP
-from torch.amp import GradScaler, autocast
 
 from utils.c_index import concordance_index_ipcw, get_censoring_dist
 from models.model_combined_alignment_risk import ( RiskModel_no_alignment_Mirai, RiskModel_implicit_alignment_Mirai, \
