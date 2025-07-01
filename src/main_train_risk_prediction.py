@@ -210,7 +210,9 @@ def main():
             args.use_reg_loss,
             args.lambda_regu,
             args.lr_decay,
-            args.no_feat_Alignment,rank, args.use_implicit_alignment
+            args.no_feat_Alignment,
+            rank,
+            args.use_implicit_alignment
         )
 
     end_time = time.time()
