@@ -20,7 +20,7 @@ def parse_arguments():
 
     # Training and model settings
     parser.add_argument("--id_training", type=int, required=True, help="Unique training ID for model identification.")
-    parser.add_argument("--num_epoch", type=int, required=True,
+    parser.add_argument("--num_epoch", type=int, default=99,
                         help="Number of training epochs used (to select model).")
     parser.add_argument("--dataset", type=str, choices=["EMBED", "CSAW"], required=True, help="Dataset name.")
 

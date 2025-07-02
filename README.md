@@ -11,6 +11,10 @@
 
 ## Introduction
 
+This repository gives you access to the code necessary to:
+- Train 
+- TODO
+- 
 
 ## Method
 
