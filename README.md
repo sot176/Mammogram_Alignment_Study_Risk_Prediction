@@ -22,7 +22,7 @@ This project provides a unified framework to compare alignment techniques and ex
 
 This repository provides the code necessary to:
 - Train a deep learning-based image registration model for longitudinal mammography images (MammoRegNet)
-- Register longitudinal mammography images using the trained MammoRegNet model
+- Register longitudinal mammography images using a trained MammoRegNet model
 - Perform breast cancer risk prediction employing different alignment methods for longitudinal mammography images
 
 ## Method
