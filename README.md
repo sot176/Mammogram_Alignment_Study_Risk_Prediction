@@ -36,7 +36,7 @@ We compare six alignment strategies for longitudinal breast cancer risk predicti
 
 - **Feature-Level Alignment:**  
   - **FeatAlign**: Joint training of the alignment module and risk prediction model using an L2 alignment loss.
-  - **FeatAlignReg**: Extension of *FeatAlign* with an added regularization loss to promote more stable and accurate alignment.
+  - **FeatAlignReg**: Extension of *FeatAlign* with an added regularization loss to encourage smoother deformation fields.
 
 
 - **Image-Level Alignment:**  
