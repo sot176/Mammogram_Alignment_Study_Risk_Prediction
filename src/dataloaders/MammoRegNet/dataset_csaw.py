@@ -1,11 +1,11 @@
 import itertools
 import os
 import random
-
 import torch
 from PIL import Image
 from torch.utils.data import Dataset
 from torchvision.transforms.functional import rgb_to_grayscale
+
 
 class CSAWCCRegistrationDataset(Dataset):
 
