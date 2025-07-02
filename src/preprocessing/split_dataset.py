@@ -1,15 +1,19 @@
-
-
 import os
-from sklearn.model_selection import train_test_split
-import shutil
 import random
-from datetime import datetime
+import shutil
 from collections import defaultdict
+from datetime import datetime
+
 import pandas as pd
+from sklearn.model_selection import train_test_split
 
 
-def split_data_and_copy_images_risk(source_dir, train_dir, val_dir, test_dir, train_size=0.5, val_size=0.2, test_size=0.3):
+def split_data_and_copy_images_risk(
+    source_dir,
+    train_dir,
+    val_dir,
+    test_dir,
+):
     """
     Split the DataFrame by patient ID and copy images into train, val, and test directories.
 
@@ -28,19 +32,19 @@ def split_data_and_copy_images_risk(source_dir, train_dir, val_dir, test_dir, tr
     test_size = 0.3  # Test size (percentage of the subset)
 
     # Extract patient IDs from filenames
-    filenames = [f for f in os.listdir(source_dir) if os.path.isfile(os.path.join(source_dir, f))]
+    filenames = [
+        f for f in os.listdir(source_dir) if os.path.isfile(os.path.join(source_dir, f))
+    ]
     patient_files = defaultdict(list)
 
     for file in filenames:
-        parts = file.split('_')
+        parts = file.split("_")
         if len(parts) < 4:
             print(f"Skipping invalid file: {file}")
             continue
 
         patient_id = parts[0]
-        laterality = parts[1]
-        view = parts[2]
-        date_str = parts[3].split('.')[0]
+        date_str = parts[3].split(".")[0]
         try:
             exam_date = datetime.strptime(date_str, "%Y-%m-%d")
         except ValueError:
@@ -54,15 +58,23 @@ def split_data_and_copy_images_risk(source_dir, train_dir, val_dir, test_dir, tr
     print(f"Total number of patients: {len(patient_ids)}")
 
     # Split all available patients into train, val, and test sets
-    train_ids, temp_ids = train_test_split(patient_ids, test_size=(val_size + test_size), random_state=42)
-    val_ids, test_ids = train_test_split(temp_ids, test_size=(test_size / (val_size + test_size)), random_state=42)
+    train_ids, temp_ids = train_test_split(
+        patient_ids, test_size=(val_size + test_size), random_state=42
+    )
+    val_ids, test_ids = train_test_split(
+        temp_ids, test_size=(test_size / (val_size + test_size)), random_state=42
+    )
 
-    print(f"Train IDs: {len(train_ids)}, Validation IDs: {len(val_ids)}, Test IDs: {len(test_ids)}")
+    print(
+        f"Train IDs: {len(train_ids)}, Validation IDs: {len(val_ids)}, Test IDs: {len(test_ids)}"
+    )
 
     # Copy files to their respective directories
-    for group, ids, target_dir in [("Train", train_ids, train_dir),
-                                   ("Validation", val_ids, val_dir),
-                                   ("Test", test_ids, test_dir)]:
+    for group, ids, target_dir in [
+        ("Train", train_ids, train_dir),
+        ("Validation", val_ids, val_dir),
+        ("Test", test_ids, test_dir),
+    ]:
         print(f"\nCopying {group} images...")
         for patient_id in ids:
             for file in patient_files[patient_id]:
@@ -71,7 +83,13 @@ def split_data_and_copy_images_risk(source_dir, train_dir, val_dir, test_dir, tr
                 shutil.copy(src_path, dest_path)
                 print(f"Copied {src_path} to {dest_path}")
 
-def split_data_and_copy_images_registration_dataset(source_dir, train_dir, val_dir, test_dir, train_size=0.6, val_size=0.2, test_size=0.2):
+
+def split_data_and_copy_images_registration_dataset(
+    source_dir,
+    train_dir,
+    val_dir,
+    test_dir,
+):
     """
     Split the DataFrame by patient ID and copy images into train, val, and test directories.
     Parameters:
@@ -91,11 +109,13 @@ def split_data_and_copy_images_registration_dataset(source_dir, train_dir, val_d
     max_files_per_group = 2  # Max images per (laterality, view) group for a patient
 
     # Extract patient IDs from filenames
-    filenames = [f for f in os.listdir(source_dir) if os.path.isfile(os.path.join(source_dir, f))]
+    filenames = [
+        f for f in os.listdir(source_dir) if os.path.isfile(os.path.join(source_dir, f))
+    ]
     patient_files = defaultdict(lambda: defaultdict(list))
 
     for file in filenames:
-        parts = file.split('_')
+        parts = file.split("_")
         if len(parts) < 4:
             print(f"Skipping invalid file: {file}")
             continue
@@ -103,7 +123,7 @@ def split_data_and_copy_images_registration_dataset(source_dir, train_dir, val_d
         patient_id = parts[0]
         laterality = parts[1]
         view = parts[2]
-        date_str = parts[3].split('.')[0]
+        date_str = parts[3].split(".")[0]
         try:
             exam_date = datetime.strptime(date_str, "%Y-%m-%d")
         except ValueError:
@@ -121,26 +141,38 @@ def split_data_and_copy_images_registration_dataset(source_dir, train_dir, val_d
             if len(images) < max_files_per_group:
                 continue
             selected_images = random.sample(images, max_files_per_group)
-            limited_patient_files[patient_id].extend([file for _, file in selected_images])
+            limited_patient_files[patient_id].extend(
+                [file for _, file in selected_images]
+            )
 
     # Select a subset of patients
     patient_ids = list(limited_patient_files.keys())
     if len(patient_ids) < subset_size:
-        print(f"Warning: Requested subset size ({subset_size}) exceeds available patients ({len(patient_ids)}).")
+        print(
+            f"Warning: Requested subset size ({subset_size}) exceeds available patients ({len(patient_ids)})."
+        )
         subset_size = len(patient_ids)
 
     subset_patient_ids = random.sample(patient_ids, subset_size)
 
     # Split the subset into train, val, and test sets
-    train_ids, temp_ids = train_test_split(subset_patient_ids, test_size=(val_size + test_size), random_state=42)
-    val_ids, test_ids = train_test_split(temp_ids, test_size=(test_size / (val_size + test_size)), random_state=42)
+    train_ids, temp_ids = train_test_split(
+        subset_patient_ids, test_size=(val_size + test_size), random_state=42
+    )
+    val_ids, test_ids = train_test_split(
+        temp_ids, test_size=(test_size / (val_size + test_size)), random_state=42
+    )
 
-    print(f"Train IDs: {len(train_ids)}, Validation IDs: {len(val_ids)}, Test IDs: {len(test_ids)}")
+    print(
+        f"Train IDs: {len(train_ids)}, Validation IDs: {len(val_ids)}, Test IDs: {len(test_ids)}"
+    )
 
     # Copy files to their respective directories
-    for group, ids, target_dir in [("Train", train_ids, train_dir),
-                                   ("Validation", val_ids, val_dir),
-                                   ("Test", test_ids, test_dir)]:
+    for group, ids, target_dir in [
+        ("Train", train_ids, train_dir),
+        ("Validation", val_ids, val_dir),
+        ("Test", test_ids, test_dir),
+    ]:
         print(f"\nCopying {group} images...")
         for patient_id in ids:
             for file in limited_patient_files[patient_id]:
@@ -150,7 +182,15 @@ def split_data_and_copy_images_registration_dataset(source_dir, train_dir, val_d
                 print(f"Copied {src_path} to {dest_path}")
 
 
-def split_data_and_copy_images(source_dir, train_dir, val_dir, test_dir, train_size=0.6, val_size=0.25, test_size=0.25, subset_size=1000):
+def split_data_and_copy_images(
+    source_dir,
+    train_dir,
+    val_dir,
+    test_dir,
+    val_size=0.25,
+    test_size=0.25,
+    subset_size=1000,
+):
     """
     Splits the dataset by patient ID, selecting a subset of patients (default: 1000).
     Randomly selects two images per laterality/view per patient and copies them to train, validation, and test directories.
@@ -170,11 +210,13 @@ def split_data_and_copy_images(source_dir, train_dir, val_dir, test_dir, train_s
     max_files_per_group = 2  # Max images per (laterality, view) group for a patient
 
     # Extract patient-specific filenames
-    filenames = [f for f in os.listdir(source_dir) if os.path.isfile(os.path.join(source_dir, f))]
+    filenames = [
+        f for f in os.listdir(source_dir) if os.path.isfile(os.path.join(source_dir, f))
+    ]
     patient_files = defaultdict(lambda: defaultdict(list))
 
     for file in filenames:
-        parts = file.split('_')
+        parts = file.split("_")
         if len(parts) < 5:  # Ensure valid filename structure
             print(f"Skipping invalid file: {file}")
             continue
@@ -200,17 +242,25 @@ def split_data_and_copy_images(source_dir, train_dir, val_dir, test_dir, train_s
 
     # Ensure subset size does not exceed available patients
     if len(patient_ids) < subset_size:
-        print(f"Warning: Requested subset size ({subset_size}) exceeds available patients ({len(patient_ids)}). Using all available patients.")
+        print(
+            f"Warning: Requested subset size ({subset_size}) exceeds available patients ({len(patient_ids)}). Using all available patients."
+        )
         subset_size = len(patient_ids)
 
     # Select a random subset of patients
     subset_patient_ids = random.sample(patient_ids, subset_size)
 
     # Split into train, validation, and test sets
-    train_ids, temp_ids = train_test_split(subset_patient_ids, test_size=(val_size + test_size), random_state=42)
-    val_ids, test_ids = train_test_split(temp_ids, test_size=(test_size / (val_size + test_size)), random_state=42)
+    train_ids, temp_ids = train_test_split(
+        subset_patient_ids, test_size=(val_size + test_size), random_state=42
+    )
+    val_ids, test_ids = train_test_split(
+        temp_ids, test_size=(test_size / (val_size + test_size)), random_state=42
+    )
 
-    print(f"Train Patients: {len(train_ids)}, Val: {len(val_ids)}, Test: {len(test_ids)}")
+    print(
+        f"Train Patients: {len(train_ids)}, Val: {len(val_ids)}, Test: {len(test_ids)}"
+    )
 
     # Function to copy files
     def copy_files(patient_list, target_dir, group_name):
@@ -228,7 +278,13 @@ def split_data_and_copy_images(source_dir, train_dir, val_dir, test_dir, train_s
     copy_files(test_ids, test_dir, "Test")
 
 
-def split_data_and_copy_images_csaw_risk(df, source_dir, train_dir, val_dir, test_dir, train_size=0.5, val_size=0.2, test_size=0.3):
+def split_data_and_copy_images_csaw_risk(
+    df,
+    source_dir,
+    train_dir,
+    val_dir,
+    test_dir,
+):
     """
     Splits the dataset by patient ID and copies all images for each patient into train, validation, and test directories.
 
@@ -245,16 +301,15 @@ def split_data_and_copy_images_csaw_risk(df, source_dir, train_dir, val_dir, tes
     df = pd.read_csv(df)
     # Iterate through the dataframe and copy images based on their split group
     for _, row in df.iterrows():
-        image_filename = row['file_name']
-        patient_id = row['patient_id']
-        split_group = row['split_group']
+        image_filename = row["file_name"]
+        split_group = row["split_group"]
 
         # Determine the target directory based on the split group
-        if split_group == 'train':
+        if split_group == "train":
             target_dir = train_dir
-        elif split_group == 'val':
+        elif split_group == "val":
             target_dir = val_dir
-        elif split_group == 'test':
+        elif split_group == "test":
             target_dir = test_dir
         else:
             continue  # Skip if the split group is not one of the expected values
@@ -266,66 +321,3 @@ def split_data_and_copy_images_csaw_risk(df, source_dir, train_dir, val_dir, tes
         # Copy the image to the target directory
         shutil.copy(src_path, dest_path)
         print(f"Copied {image_filename} to {target_dir}")
-
-def copy_images(main_folder, training_folder, target_dir):
-    """
-    Copies images from the main folder that are present in the training folder
-    to a new folder.
-
-    Args:
-    - main_folder (str): Path to the main folder containing all images.
-    - training_folder (str): Path to the folder containing training images.
-    - new_folder (str): Path to the new folder where selected images will be copied.
-
-    Returns:
-    - None
-    """
-    # Create the new folder if it doesn't exist
-    os.makedirs(target_dir, exist_ok=True)
-
-    # Get the list of image files in the training folder
-    training_images = os.listdir(training_folder)
-
-    # Iterate over the training images
-    for image in training_images:
-        # Check if the image exists in the main folder
-        main_image_path = os.path.join(main_folder, image)
-        if os.path.isfile(main_image_path):
-            # Copy the image to the new folder
-            src_path = os.path.join(main_folder, image)
-            dest_path = os.path.join(target_dir, image)
-            shutil.copy(src_path, dest_path)
-            print(f"Copied {image} to {target_dir}")
-
-
-def main():
-    train_dir = "/storage/CsawCC/Risk_dataset_train_val_test/train"
-    val_dir = "/storage/CsawCC/Risk_dataset_train_val_test/val"
-    test_dir = "/storage/CsawCC/Risk_dataset_train_val_test/test"
-    source_dir_1 =  "/storage/CsawCC/risk_prediction_dataset_1664_2048"
-    out_dir_train = "/storage/CsawCC/Risk_dataset_train_val_test_1664_2048/train"
-    out_dir_val =  "/storage/CsawCC/Risk_dataset_train_val_test_1664_2048/val"
-    out_dir_test = "/storage/CsawCC/Risk_dataset_train_val_test_1664_2048/test"
-
-    print("split risk dataset in train,val,test")
-    copy_images(source_dir_1,train_dir,out_dir_train )
-    copy_images(source_dir_1,val_dir,out_dir_val )
-    copy_images(source_dir_1,test_dir,out_dir_test )
-
-
-    train_dir2 = "/storage/CsawCC/Registration_data_1025_512/train"
-    val_dir2 = "/storage/CsawCC/Registration_data_1025_512/val"
-    test_dir2 = "/storage/CsawCC/Registration_data_1025_512/test"
-    source_dir_2 =  "/storage/CsawCC/risk_prediction_dataset_1664_2048"
-    out_dir_train2 = "/storage/CsawCC/Registration_data_1664_2048/train"
-    out_dir_val2 =  "/storage/CsawCC/Registration_data_1664_2048/val"
-    out_dir_test2 = "/storage/CsawCC/Registration_data_1664_2048/test"
-
-    print("split registration dataset in train,val,test")
-    copy_images(source_dir_2,train_dir2,out_dir_train2 )
-    copy_images(source_dir_2,val_dir2,out_dir_val2 )
-    copy_images(source_dir_2,test_dir2,out_dir_test2 )
-
-
-if __name__ == '__main__':
-    main()
