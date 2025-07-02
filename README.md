@@ -3,15 +3,15 @@
 Code of the paper "The Impact of Longitudinal Mammogram Alignment on Breast Cancer Risk Assessment". 
 
 ## Table of Contents
-1. [Introduction](#introduction)
-2. [Method](#method)
-3. [Key findings of the paper](#key-findings-of-the-paper)
-4. [Datasets](#datasets)
-5. [Reproduction of the results](#reproduction-of-the-results)
-6. [Citation](#citation)
+1. 📘 [Introduction](#introduction)  
+2. ⚙️ [Method](#method)  
+3. 🔍 [Key findings of the paper](#key-findings-of-the-paper)  
+4. 📚 [Datasets](#datasets)  
+5. ▶️ [Reproduction of the results](#reproduction-of-the-results)  
+6. 📄 [Citation](#citation)  
 
 
-## Introduction
+## 📘 Introduction
 This project focuses on breast cancer risk prediction using longitudinal mammography. 
 By incorporating both current and prior scans, the model captures temporal changes in breast tissue, leading to improved prediction accuracy. 
 Accurately modeling these changes requires proper alignment across time points.
@@ -25,7 +25,7 @@ This repository provides the code necessary to:
 - Register longitudinal mammography images using the trained MammoRegNet model
 - Perform breast cancer risk prediction employing different alignment methods for longitudinal mammography images
 
-## Method
+## ⚙️ Method
 We compare six alignment strategies for longitudinal breast cancer risk prediction:
 
 - **NoAlign:** Direct feature extraction without any alignment between time points. Serves as the baseline.
@@ -48,17 +48,21 @@ We compare six alignment strategies for longitudinal breast cancer risk predicti
   <img src="Figures/Overview.png" alt="Image 1" width="600"/>
 </p>
 
-## Key findings of the paper
+## 🔍 Key findings of the paper
 
+- 🔄 Comparative study of alignment strategies for longitudinal mammography.  
+- 📈 Alignment improves accuracy of temporal breast cancer risk prediction.  
+- ⚖️ Explicit alignment methods outperform implicit alignment approaches.  
+- 🔧 Deformation improves, but regularized feature alignment lowers risk prediction.  
+- 🥇 Feature-space warping with image-based deformation fields performs best.  
 
-
-## Datasets
+## 📚 Datasets
 We used two large, publicly available mammography datasets :
 - **Emory Breast Imaging Dataset (EMBED)**: https://aws.amazon.com/marketplace/pp/prodview-unw4li5rkivs2#overview}
 - **Cohort of Screen-Aged Women Case Control (CSAW-CC)**: https://snd.se/en/catalogue/dataset/2021-204-1
 
 
-## Reproduction of the results
+## ▶️ Reproduction of the results
 For reproducing the results follow the instructions below:
 
 **Important**: for each script in the `scripts` folder, make sure you update the paths to load the correct datasets and export the results in your favorite directory.
@@ -93,4 +97,4 @@ Run `scripts/test_MammoRegNet.sh`
 #### 4.2) Risk prediction models
 Run `scripts/test_Risk_NoAlign.sh`, `scripts/test_Risk_ImplicitAlign.sh`, `scripts/test_Risk_FeatAlign.sh`, `scripts/test_Risk_FeatAlignReg.sh`, `scripts/test_Risk_ImgAlign.sh`, and `scripts/test_Risk_ImgFeatAlign.sh`
 
-## Citation
+## 📄 Citation
