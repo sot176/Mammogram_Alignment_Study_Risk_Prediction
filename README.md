@@ -55,13 +55,13 @@ For the risk prediction, create a CSV file describing your dataset by running th
 For training MammoRegNet run `scripts/train_MammoRegNet.sh`
 
 #### 3.2) Risk prediction models
-For training the risk prediction models run `scripts/train_risk_NoAlign.sh`, `scripts/train_risk_FeatAlign.sh`, `scripts/train_risk_FeatAlignReg.sh`, `scripts/train_risk_ImgAlign.sh`, and `scripts/train_risk_ImgFeatAlign.sh`
+For training the risk prediction models run `scripts/train_Risk_NoAlign.sh`, `scripts/train_Risk_ImplicitAlign.sh`, `scripts/train_Risk_FeatAlign.sh`, `scripts/train_Risk_FeatAlignReg.sh`, `scripts/train_Risk_ImgAlign.sh`, and `scripts/train_Risk_ImgFeatAlign.sh`
 
 ### 4) Inference 
 #### 4.1) MammoRegNet
 Run `scripts/test_MammoRegNet.sh`
 
 #### 4.2) Risk prediction models
-Run `scripts/test_risk_NoAlign.sh`, `scripts/test_risk_FeatAlign.sh`, `scripts/test_risk_FeatAlignReg.sh`, `scripts/test_risk_ImgAlign.sh`, and `scripts/test_risk_ImgFeatAlign.sh`
+Run `scripts/test_Risk_NoAlign.sh`, `scripts/test_Risk_ImplicitAlign.sh`, `scripts/test_Risk_FeatAlign.sh`, `scripts/test_Risk_FeatAlignReg.sh`, `scripts/test_Risk_ImgAlign.sh`, and `scripts/test_Risk_ImgFeatAlign.sh`
 
 ## Citation
