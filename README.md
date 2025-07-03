@@ -53,7 +53,7 @@ We compare six alignment strategies for longitudinal breast cancer risk predicti
 - 🔄 Comparative study of alignment strategies for longitudinal mammography.  
 - 📈 Alignment improves accuracy of temporal breast cancer risk prediction.  
 - ⚖️ Explicit alignment methods outperform implicit alignment approaches.  
-- 🔧 Deformation improves, but regularized feature alignment lowers risk prediction.  
+- 🔧 Regularized feature alignment improves deformation but lowers risk prediction.  
 - 🥇 Feature-space warping with image-based deformation fields performs best.  
 
 ## Datasets
