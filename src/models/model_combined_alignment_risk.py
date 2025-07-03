@@ -16,7 +16,7 @@ class CombinedAlignmentRiskModel_Mirai(nn.Module):
         super().__init__()
         sys.path.append('path/to/onconet')  # Adjust or remove based on your package structure
         self.encoder = extract_mirai_backbone(
-            '/scratch/project_465001915/thrunsol/mirai_pretrained_backbone/mgh_mammo_MIRAI_Base_May20_2019.p'
+            '/path/to/mirai_pretrained_backbone/mgh_mammo_MIRAI_Base_May20_2019.p'
         )
         self.encoder.requires_grad = False  # Freeze encoder weights
         self.attention_alignment_model = FeatureAlignmentModel(in_channels)
@@ -73,7 +73,7 @@ class RiskModel_no_alignment_Mirai(nn.Module):
         sys.path.append('path/to/onconet')  # Adjust or remove based on your package structure
 
         self.encoder = extract_mirai_backbone(
-            '/scratch/project_465001915/thrunsol/mirai_pretrained_backbone/mgh_mammo_MIRAI_Base_May20_2019.p'
+            '/path/to/mirai_pretrained_backbone/mgh_mammo_MIRAI_Base_May20_2019.p'
         )
         self.encoder.requires_grad = False
         self.risk_prediction_model = RiskModelWithAttention_NoAlignment()
@@ -106,7 +106,7 @@ class RiskModel_implicit_alignment_Mirai(nn.Module):
         sys.path.append('path/to/onconet')  # Adjust or remove based on your package structure
 
         self.encoder = extract_mirai_backbone(
-            '/scratch/project_465001915/thrunsol/mirai_pretrained_backbone/mgh_mammo_MIRAI_Base_May20_2019.p'
+            '/path/to/mirai_pretrained_backbone/mgh_mammo_MIRAI_Base_May20_2019.p'
         )
         self.encoder.requires_grad = False
         self.risk_prediction_model = RiskModelWithAttention_implicit_alignment()
@@ -139,7 +139,7 @@ class CombinedImgAlignmentRiskModel_Mirai(nn.Module):
         sys.path.append('path/to/onconet')  # Adjust or remove based on your package structure
 
         self.encoder = extract_mirai_backbone(
-            '/scratch/project_465001915/thrunsol/mirai_pretrained_backbone/mgh_mammo_MIRAI_Base_May20_2019.p'
+            '/path/to/mirai_pretrained_backbone/mgh_mammo_MIRAI_Base_May20_2019.p'
         )
         self.encoder.requires_grad = False
         self.risk_prediction_model = RiskModelWithAttention()
@@ -183,7 +183,7 @@ class CombinedImgAlignmentRiskModel_downsample_img_deformation_field_Mirai(nn.Mo
         super().__init__()
         sys.path.append('path/to/onconet')  # Adjust or remove based on your package structure
         self.encoder = extract_mirai_backbone(
-            '/scratch/project_465001915/thrunsol/mirai_pretrained_backbone/mgh_mammo_MIRAI_Base_May20_2019.p'
+            '/path/to/mirai_pretrained_backbone/mgh_mammo_MIRAI_Base_May20_2019.p'
         )
         self.encoder.requires_grad = False
         self.risk_prediction_model = RiskModelWithAttention()
