@@ -26,7 +26,10 @@ This repository provides the code necessary to:
 - Perform breast cancer risk prediction employing different alignment methods for longitudinal mammography images
 
 ## Method
-We compare six alignment strategies for longitudinal breast cancer risk prediction:
+We compare seven strategies for longitudinal breast cancer risk prediction:
+
+- **SingleTimePoint:** Risk prediction using only the current mammogram, without incorporating prior exams. Serves as a single-timepoint baseline.
+
 
 - **NoAlign:** Direct feature extraction without any alignment between time points. Serves as the baseline.
 
