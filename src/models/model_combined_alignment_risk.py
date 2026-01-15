@@ -6,6 +6,8 @@ import sys
 from  models.model_risk_prediction import RiskModelWithAttention_implicit_alignment, RiskModelWithAttention, RiskModelWithAttention_NoAlignment
 from asymmetry_model.mirai_localized_dif_head import extract_mirai_backbone
 from models.model_feat_alignment import FeatureAlignmentModel, SpatialTransformerBlock
+from models.model_risk_prediction import TemporalAttentionLayer, \
+    CumulativeProbabilityLayer
 
 
 class CombinedAlignmentRiskModel_Mirai(nn.Module):
@@ -233,3 +235,51 @@ class CombinedImgAlignmentRiskModel_downsample_img_deformation_field_Mirai(nn.Mo
             'diff_feature': fdiff,
         }
 
+
+
+class RiskModel_Singletimepoint(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.encoder = extract_mirai_backbone(
+            '/path/to/mirai_pretrained_backbone/mgh_mammo_MIRAI_Base_May20_2019.p'
+        )
+        self.encoder.requires_grad = False
+        self.attention_layer = TemporalAttentionLayer(dim=512, num_heads=8)
+
+        self.cumulative_prob_layer = CumulativeProbabilityLayer(512, 5)
+
+    def forward(self,  img_cur, img_pri, time_gap):
+        """
+        Args:
+            f_cur: Current image features (B, C, H, W)
+            f_pri: Prior image features (B, C, H, W)
+            time_gap: Time gap (unused here)
+        """
+
+        # Convert grayscale → 3 channels
+        if img_cur.size(1) == 1:
+            img_cur = img_cur.repeat(1, 3, 1, 1)
+
+        # ---- Encode image ----
+        f_cur = self.encoder(img_cur)  # (B, 512, H', W')
+        B, C, H, W = f_cur.shape
+
+        # ---- Global pool ----
+        f_cur_pooled = F.adaptive_avg_pool2d(f_cur, (1, 1)).view(B, C)  # (B, 512)
+
+        # ---- Prepare for attention ----
+        # single-token sequence: (1, B, 512)
+        seq = f_cur_pooled.unsqueeze(0)
+
+        attended = self.attention_layer(seq)  # (1, B, 512)
+        attended = attended.squeeze(0)  # (B, 512)
+
+        # ---- Project after attention ----
+        #fused_feat = self.feature_projection(attended)
+
+        # ---- Final cumulative probability prediction ----
+        out = self.cumulative_prob_layer(attended)
+
+        return {
+            'risk_prediction': out,
+        }
