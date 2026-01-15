@@ -45,7 +45,7 @@ We compare six alignment strategies for longitudinal breast cancer risk predicti
 
 
 <p align="center">
-  <img src="Figures/Overview.png" alt="Image 1" width="600"/>
+  <img src="Figures/overview.png" alt="Image 1" width="600"/>
 </p>
 
 ## Key findings of the paper
