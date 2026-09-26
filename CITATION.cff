@@ -1,0 +1,40 @@
+cff-version: 1.2.0
+title: "The Impact of Longitudinal Mammogram Alignment on Breast Cancer Risk Assessment"
+message: "If you use this repository or MammoRegNet, please cite it using the metadata below."
+type: software
+date-released: 2025-06-01
+authors:
+  - family-names: "Thrun"
+    given-names: "Solveig"
+  - family-names: "Hansen"
+    given-names: "Stine"
+  - family-names: "Sun"
+    given-names: "Zijun"
+  - family-names: "Blum"
+    given-names: "Nele"
+  - family-names: "Salahuddin"
+    given-names: "Suaiba A."
+  - family-names: "Wickstrøm"
+    given-names: "Kristoffer"
+  - family-names: "Wetzer"
+    given-names: "Elisabeth"
+  - family-names: "Jenssen"
+    given-names: "Robert"
+  - family-names: "Stille"
+    given-names: "Maik"
+  - family-names: "Kampffmeyer"
+    given-names: "Michael"
+
+repository-code: "https://github.com/sot176/Mammogram_Alignment_Study_Risk_Prediction"
+license: "MIT"
+
+abstract: >
+  Regular mammography screening is crucial for early breast cancer detection. By leveraging deep learning-based risk models, screening intervals can be personalized, especially for high-risk individuals. 
+  While recent methods increasingly incorporate longitudinal information from prior mammograms, accurate spatial alignment across time points remains a key challenge. Misalignment can obscure meaningful tissue changes and degrade model performance. 
+  In this study, we provide insights into various alignment strategies, image-based registration, feature-level (representation space) alignment with and without regularization, and implicit alignment methods, for their effectiveness in longitudinal deep learning-based risk modeling. 
+  Using two large-scale mammography datasets, we assess each method across key metrics, including predictive accuracy, precision, recall, and deformation field quality.
+  Our results show that image-based registration consistently outperforms the more recently favored feature-based and implicit approaches across all metrics, enabling more accurate, temporally consistent predictions and generating smooth, anatomically plausible deformation fields. 
+  Although regularizing the deformation field improves deformation quality, it reduces the risk prediction performance of feature-level alignment. 
+  Applying image-based deformation fields within the feature space yields the best risk prediction performance.
+  These findings underscore the importance of image-based deformation fields for spatial alignment in longitudinal risk modeling, offering improved prediction accuracy and robustness. 
+  This approach has strong potential to enhance personalized screening and enable earlier interventions for high-risk individuals.
